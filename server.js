@@ -1,6 +1,17 @@
 // DEPENDENCIES
 const express = require('express')
 const app = express()
+const { Sequelize } = require('sequelize')
+// SEQUELIZE CONNECTION
+
+const sequelize = new Sequelize({
+    storage: process.env.PG_URI,
+    dialect: 'postgres',
+    username: 'postgres',
+    password: 'Guitar04!'
+  })
+  
+
 
 // CONFIGURATION / MIDDLEWARE
 require('dotenv').config()
