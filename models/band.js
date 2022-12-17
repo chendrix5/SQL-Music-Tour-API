@@ -1,38 +1,66 @@
-// DEPENDENCIES
-const { Sequelize, DataTypes,  Model } = require('sequelize')
-const sequelize = new Sequelize(process.env.PG_URI)
-
-// MODEL
-class Band extends Model{}
-
-Band.init({
-    band_id: { 
-        type: DataTypes.INTEGER, 
-        primaryKey: true,  
-        autoIncrement: true 
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = {
+    up: async (queryInterface, Sequelize) => {
+      await queryInterface.createTable('bands', {
+          band_id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          type: Sequelize.INTEGER
+        },
+        name: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        genre: {
+          type: Sequelize.TEXT,
+          allowNull: false,
+        },
+        available_start_time: {
+          type: Sequelize.DATE,
+          allowNull: false,
+        },
+        end_time: {
+          type: Sequelize.DATE,
+          allowNull: false,
+        }
+      })
     },
-    name: { 
-        type: DataTypes.STRING, 
-        allowNull: false 
+    down: async (queryInterface, Sequelize) => {
+      await queryInterface.dropTable('bands')
+    }
+  }
+  
+  Band.init({
+    band_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
-    genre: { 
-        type: DataTypes.TEXT, 
-        allowNull: false 
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
-    available_start_time: { 
-        type: DataTypes.DATE, 
-        allowNull: false 
+    genre: {
+        type: DataTypes.TEXT,
+        allowNull: false
     },
-    end_time: { 
-        type: DataTypes.DATE, 
-        allowNull: false 
+    available_start_time: {
+        type: DataTypes.DATE,
+        allowNull: false
     },
-}, {
-    sequelize,                           
+    end_time: {
+        type: DataTypes.DATE,
+        allowNull: false
+    }
+  }, {
+    sequelize,
     modelName: 'Band',
-    tableName: 'band',
+    tableName: 'bands',
     timestamps: false
-}) 
+  })
 
-// EXPORT
-module.exports = Band
+  return Band;
